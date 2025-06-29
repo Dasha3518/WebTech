@@ -51,7 +51,9 @@ namespace Fedorova.UI.Controllers
         //    return View(productResponse.Data.Count);
         //}
 
-        public async Task<IActionResult> Index(string? category)
+        [Route("Catalog")]
+        [Route("Catalog/{category}")]        
+        public async Task<IActionResult> Index(string? category, int pageNo = 1)
         {
             // получить список категорий
             var categoriesResponse = await
@@ -67,7 +69,7 @@ namespace Fedorova.UI.Controllers
             var productResponse = await productService.GetProductListAsync(category);
             if (!productResponse.Success)
                 ViewData["Error"] = productResponse.ErrorMessage;
-            return View(productResponse.Data.Count);
+            return View(productResponse.Data);
         }
 
         

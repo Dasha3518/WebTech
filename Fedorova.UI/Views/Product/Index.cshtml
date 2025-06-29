@@ -1,4 +1,5 @@
-﻿@model IEnumerable<Dish>
+﻿@using Fedorova.Domain.Models
+@model ProductListModel<Dish>
 
 
 @{
@@ -6,6 +7,9 @@
     var request = ViewContext.HttpContext.Request;
     var returnUrl = request.Path + request.QueryString.ToUriComponent();
     var categories = ViewData["categories"] as IEnumerable<Category>;
+    string? category = request.Query["category"].ToString();
+    int prev = Model.CurrentPage == 1 ? 1 : Model.CurrentPage - 1;
+    int next = Model.CurrentPage == Model.TotalPages ? Model.TotalPages : Model.CurrentPage + 1;
 }
 <h2 class="m-3">Блюда дня</h2>
 <div class="row">
@@ -13,66 +17,47 @@
         <ul class="nav ">
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle"
-                    data-bs-toggle="dropdown"
-                    href="#"
-                    role="button"
-                    aria-expanded="false">
+                   data-bs-toggle="dropdown"
+                   href="#"
+                   role="button"
+                   aria-expanded="false">
                     @ViewData["currentCategory"]
                 </a>
                 <ul class="dropdown-menu">
                     <li>
                         <a class="dropdown-item"
-                        asp-controller="product"
-                        asp-route-category=@null>Все</a>
+                           asp-controller="product"
+                           asp-route-category=@null>Все</a>
                     </li>
-                    @foreach (var item in categories)
+                    @foreach (var item in Model.Items)
                     {
-                    <li>
-                        <a class="dropdown-item"
-                            asp-controller="product" asp-route-category="@item.NormalizedName">
+                        <li>
+                            <a class="dropdown-item"
+                               asp-controller="product" asp-route-category="@item.Category.NormalizedName">
                                 @item.Name
-                        </a>
-                    </li>
+                            </a>
+                        </li>
                     }
                 </ul>
             </li>
         </ul>
     </div>
-    @if (Model != null)
-    {
+@if (Model != null)
+{
         <div class="card-group">
-            @foreach (var item in Model)
+            @foreach (var item in Model.Items)
             {
-                <div class="col-4 p-4">
-                    <div class="card border-dark m-2">
-                        <img class="card-img-top" src="@item.Image" alt="No image available" />
-                        <div class="card-body">
-                            <h5 class="card-title">@item.Name</h5>
-                            <p class="card-text">@item.Description</p>
-                            <h5>
-                                <span class="badge bg-secondary">
-                                    @item.Calories
-                                    калорий
-                                </span>
-                            </h5>
-                        </div><!-- card-body -->
-                        <div class="card-footer text-center">
-                            <a class="btn btn-outline-primary"
-                               asp-action="add" asp-controller="cart"
-                               asp-route-id="@item.Id"
-                               asp-route-returnurl="@returnUrl">
-                                Add to cart <i class="fa-solid fa-cart-shopping"></i>
-                            </a>
-                        </div><!-- card-footer -->
-                    </div><!-- card -->
-                </div>
-        <!-- col -->
-            } 
+                <partial name="_ProductItemPartial" model="@item" />
+            }
         </div>
-    }
-    <h2 class="text-warning">@ViewData["Error"]</h2>
-@* 
-@{
+}
+    <!-- Pager -->
+    <pager current-page="@Model.CurrentPage" total-pages="@Model.TotalPages" category="@category"></pager>
+
+        <h2 class="text-warning">@ViewData["Error"]</h2>
+
+   
+ @* @{
     ViewData["Title"] = "Menu";
     var categories = ViewData["Groups"] as IQueryable<DishGroup>;
     int currentGroup = (int)ViewData["CurrentGroup"];
@@ -119,7 +104,7 @@
 
  *@
 
-   @*  <ul class="pagination pagination-lg">
+    @* <ul class="pagination pagination-lg">
         @for (int i = 1; i <= Model.TotalPages; i++)
         {
             @if (i == Model.CurrentPage)
@@ -141,4 +126,4 @@
 
         }
     </ul> *@
-</div>
+    </div>

@@ -28,6 +28,21 @@ namespace Fedorova.UI.Services.ProductService
             // если этот Id имеется
             var data = _dishes.Where(d => categoryId == null || d.CategoryId.Equals(categoryId))?
             .ToList();
+
+            // получить размер страницы из конфигурации
+            int pageSize = _config.GetSection("ItemsPerPage").Get<int>();
+            // получить общее количество страниц
+            int totalPages = (int)Math.Ceiling(data.Count /
+            (double)pageSize);
+            // получить данные страницы
+            var listData = new ProductListModel<Dish>()
+            {
+                Items = data.Skip((pageNo - 1) *
+            pageSize).Take(pageSize).ToList(),
+                CurrentPage = pageNo,
+                TotalPages = totalPages
+            };
+
             // поместить ранные в объект результата
             result.Data = new ProductListModel<Dish>() { Items = data };
             // Если список пустой
