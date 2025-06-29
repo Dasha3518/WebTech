@@ -1,4 +1,5 @@
 using Fedorova.UI.Data;
+using Fedorova.UI.Services.CategoryService;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
@@ -35,6 +36,8 @@ builder.Services.AddAuthorization(opt =>
 builder.Services.AddSingleton<IEmailSender, NoOpEmailSender>();
 
 builder.Services.AddControllersWithViews();
+
+//builder.Services.AddScoped<ICategoryService>;
 
 var app = builder.Build();
 

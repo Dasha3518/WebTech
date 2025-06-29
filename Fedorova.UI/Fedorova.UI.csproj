@@ -21,4 +21,8 @@
     <Folder Include="wwwroot\Images\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Fedorova.Domain\Fedorova.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

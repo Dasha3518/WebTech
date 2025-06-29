@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36221.1 d17.14
+VisualStudioVersion = 17.14.36221.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fedorova.UI", "Fedorova.UI\Fedorova.UI.csproj", "{80547F03-85D5-4E77-9F04-6B4CEEE1AB98}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fedorova.Domain", "Fedorova.Domain\Fedorova.Domain.csproj", "{CAEE5A02-9BEE-4D31-AED5-A07C8355A042}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{80547F03-85D5-4E77-9F04-6B4CEEE1AB98}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{80547F03-85D5-4E77-9F04-6B4CEEE1AB98}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{80547F03-85D5-4E77-9F04-6B4CEEE1AB98}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CAEE5A02-9BEE-4D31-AED5-A07C8355A042}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CAEE5A02-9BEE-4D31-AED5-A07C8355A042}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CAEE5A02-9BEE-4D31-AED5-A07C8355A042}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CAEE5A02-9BEE-4D31-AED5-A07C8355A042}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
