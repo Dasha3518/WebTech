@@ -20,15 +20,13 @@ namespace Fedorova.UI.Models
         /// <param name="current">номер текущей страницы</param>
         /// <param name="itemsPerPage">кол. объектов на странице</param>
         /// <returns>объект класса ListViewModel</returns>
-        public static ListModel<T> GetModel(IEnumerable<T> list,
-        int current, int itemsPerPage)
+        public static ListModel<T> GetModel(IEnumerable<T> list, int current, int itemsPerPage)
         {
             var items = list
             .Skip((current - 1) * itemsPerPage)
             .Take(itemsPerPage)
             .ToList();
-            var total = (int)Math.Ceiling((double)list.Count() /
-            itemsPerPage);
+            var total = (int)Math.Ceiling((double)list.Count()/itemsPerPage);
             return new ListModel<T>(items, total, current);
         }
     }
