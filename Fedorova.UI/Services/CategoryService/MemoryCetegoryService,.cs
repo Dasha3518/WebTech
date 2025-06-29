@@ -9,8 +9,8 @@ namespace Fedorova.UI.Services.CategoryService
         {
             var categories = new List<Dish>
             {
-            new Dish {DishId=1, DishName="Стартеры",  NormalizedName="starters"},
-            new Dish {DishId=2, DishName="Салаты", NormalizedName="salads"},
+            new Dish {Id=1, Name="Стартеры"},
+            new Dish {Id=2, Name="Салаты"},
 
             };
             var result = new ResponseData<List<Dish>>();

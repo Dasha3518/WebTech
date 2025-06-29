@@ -10,13 +10,13 @@
 
             @User.Claims.FirstOrDefault(c=>c.Type.Equals("Name",StringComparison.OrdinalIgnoreCase))?.Value
 
-        Fedorova@gmail.com
-        <img src="images/default-profile-picture.jpg" width="30" alt="User" class="rounded nav-color" />
+      
+            <img src="@Url.Action("GetAvatar", "Image")" width="30" alt="User" class="rounded bg-light" />    
     </button>
     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
         <li>
             <span class="dropdown-item-text">
-                <img src="images/default-profile-picture.jpg" width="50" alt="User" class="rounded" />
+                <img src="@Url.Action("GetAvatar","Image")" width="50" alt="User" class="rounded" />
                     @User.Identity?.Name!
             </span>
         </li>

@@ -5,7 +5,7 @@
                  alt='NoImage'
                  class="card-img-top" />
             <h5 class="card-title">
-                @Model.DishName
+                @Model.Name
             </h5>
             <p class="card-text">
                 @Model.Description
@@ -23,7 +23,7 @@
             <p class="mt-2">
                 <a asp-action="Add"
                    asp-controller="Cart"
-                   asp-route-id="@Model.DishId"
+                   asp-route-id="@Model.Id"
                    asp-route-returnUrl="@returnUrl"
                    class="btn btn-primary">
                     <i class="fa fa-shopping-cart"></i> В корзину

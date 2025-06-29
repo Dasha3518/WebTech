@@ -1,12 +1,15 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Fedorova.Domain.Entities;
+using Fedorova.Domain.Models;
 using Fedorova.UI.Data;
-using Fedorova.Domain.Entities;
 using Fedorova.UI.Models;
+using Fedorova.UI.Services.CategoryService;
+using Fedorova.UI.Services.ProductService;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace WebLabs.Controllers
+namespace Fedorova.UI.Controllers
 {
-    public class ProductController : Controller
+    public class ProductController(ICategoryService categoryService, IProductService productService) : Controller
     {
         ApplicationDbContext _context;
 
@@ -15,34 +18,62 @@ namespace WebLabs.Controllers
 
         int _pageSize;
 
-		public ProductController(ApplicationDbContext context)
-		{
-			_pageSize = 3;
-			_context = context;
-			//SetupData();
-		}
-        //public ProductController()
+        //public ProductController(ApplicationDbContext context)
+        //{
+        //	_pageSize = 3;
+        //	_context = context;
+        //	//SetupData();
+        //}
+        //      //public ProductController()
+        //      //      {
+        //      //          _pageSize = 3;
+        //      //          SetupData();
+        //      //      }
+        //      [Route("Catalog")]
+        //      [Route("Catalog/Page_{pageNo}")]
+        //      public IActionResult Index(int? group, int pageNo = 1)
         //      {
-        //          _pageSize = 3;
-        //          SetupData();
+
+        //          var dishesFiltered = _context.Dish.Where(d => !group.HasValue || d.DishGroupId == group.Value);
+
+        //          ViewData["Groups"] = _context.DishGroup.Where(d => true);//_dishGroups;
+        //          // Получить id текущей группы и поместить в TempData
+        //          ViewData["CurrentGroup"] = group ?? 0;
+
+        //          ViewData["DishGroupId"] = new SelectList(_context.DishGroup, "DishGroupId", "GroupName");
+        //          return View(ListModel<Dish>.GetModel(dishesFiltered, pageNo, _pageSize));
         //      }
-        [Route("Catalog")]
-        [Route("Catalog/Page_{pageNo}")]
-        public IActionResult Index(int? group, int pageNo = 1)
+        //public async Task<IActionResult> Index()
+        //{
+        //    var productResponse = await productService.GetProductListAsync(null);
+        //    if (!productResponse.Success)
+        //        return NotFound(productResponse.ErrorMessage);
+        //    return View(productResponse.Data.Count);
+        //}
+
+        public async Task<IActionResult> Index(string? category)
         {
-
-            var dishesFiltered = _context.Dish.Where(d => !group.HasValue || d.DishGroupId == group.Value);
-
-            ViewData["Groups"] = _context.DishGroup.Where(d => true);//_dishGroups;
-            // Получить id текущей группы и поместить в TempData
-            ViewData["CurrentGroup"] = group ?? 0;
-
-            ViewData["DishGroupId"] = new SelectList(_context.DishGroup, "DishGroupId", "GroupName");
-            return View(ListModel<Dish>.GetModel(dishesFiltered, pageNo, _pageSize));
+            // получить список категорий
+            var categoriesResponse = await
+            categoryService.GetCategoryListAsync();
+            // если список не получен, вернуть код 404
+            if (!categoriesResponse.Success)
+                return NotFound(categoriesResponse.ErrorMessage);
+            // передать список категорий во ViewData
+            ViewData["categories"] = categoriesResponse.Data;
+            // передать во ViewData имя текущей категории
+            var currentCategory = category == null ? "Все" : categoriesResponse.Data.FirstOrDefault(c => c.Category.NormalizedName == category)?.Name;
+            ViewData["currentCategory"] = currentCategory;
+            var productResponse = await productService.GetProductListAsync(category);
+            if (!productResponse.Success)
+                ViewData["Error"] = productResponse.ErrorMessage;
+            return View(productResponse.Data.Count);
         }
 
-		
-		private void SetupData()
+        
+
+
+        private void SetupData()
         {
             _dishGroups = new List<DishGroup>
             {
@@ -58,20 +89,11 @@ namespace WebLabs.Controllers
             };
                         _dishes = new List<Dish>
             {
-            new Dish {DishId = 1, DishName="Суп-харчо",
-            Description="Очень острый, невкусный",
-            Calories =200, DishGroupId=3, Image="Суп.jpg" },
-            new Dish { DishId = 2, DishName="Борщ",
-            Description="Много сала, без сметаны",
-            Calories =330, DishGroupId=3, Image="Борщ.jpg" },
-            new Dish { DishId = 3, DishName="Котлета пожарская",
-            Description="Хлеб - 80%, Морковь - 20%",Calories =635, DishGroupId=4, Image="Котлета.jpg" },
-            new Dish { DishId = 4, DishName="Макароны по-флотски",
-            Description="С охотничьей колбаской",
-            Calories =524, DishGroupId=4, Image="Макароны.jpg" },
-            new Dish { DishId = 5, DishName="Компот",
-            Description="Быстро растворимый, 2 литра",
-            Calories =180, DishGroupId=5, Image="Компот.jpg" }
+            new Dish {Id = 1, Name="Суп-харчо", Description="Очень острый, невкусный", Calories =200, CategoryId=3, Image="1.jpg" },
+            new Dish { Id = 2, Name="Борщ", Description="Много сала, без сметаны", Calories =330, CategoryId=3, Image="2.jpg" },
+            new Dish { Id = 3, Name="Котлета пожарская", Description="Хлеб - 80%, Морковь - 20%",Calories =635, CategoryId=4, Image="3.jpg" },
+            new Dish { Id = 4, Name="Макароны по-флотски", Description="С охотничьей колбаской", Calories =524, CategoryId=4, Image="4.jpg" },
+            new Dish { Id = 5, Name="Компот", Description="Быстро растворимый, 2 литра", Calories =180, CategoryId=5, Image="1.jpg" }
             };
         }
     }

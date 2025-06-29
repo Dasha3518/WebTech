@@ -9,6 +9,38 @@ namespace Fedorova.UI.Services.ProductService
     {
         List<Dish> _dishes;
         List<DishGroup> _dishGroup;
+        List<Category> _categories;
+
+        public Task<ResponseData<ProductListModel<Dish>>> GetProductListAsync(string? categoryNormalizedName, int pageNo = 1)
+        {
+            // Создать объект результата
+            var result = new ResponseData<ProductListModel<Dish>>();
+            // Id категории для фильрации
+            int? categoryId = null;
+            // если требуется фильтрация, то найти Id категории
+            // с заданным categoryNormalizedName
+            if (categoryNormalizedName != null)
+                categoryId = _categories
+                .Find(c =>
+                c.NormalizedName.Equals(categoryNormalizedName))
+                ?.Id;
+            // Выбрать объекты, отфильтрованные по Id категории,
+            // если этот Id имеется
+            var data = _dishes.Where(d => categoryId == null || d.CategoryId.Equals(categoryId))?
+            .ToList();
+            // поместить ранные в объект результата
+            result.Data = new ProductListModel<Dish>() { Items = data };
+            // Если список пустой
+            if (data.Count == 0)
+            {
+                result.Success = false;
+                result.ErrorMessage = "Нет объектов в выбраннной категории";
+            }
+            // Вернуть результат
+            return Task.FromResult(result);
+        }
+        
+
         public MemoryProductService(ICategoryService categoryService)
         {
             //_dishGroup = categoryService.GetCategoryListAsync();
@@ -22,21 +54,21 @@ namespace Fedorova.UI.Services.ProductService
         {
             _dishes = new List<Dish>
             {
-            new Dish {DishId = 1, DishName="Суп-харчо", Description="Очень острый, невкусный", Calories =200, Image="Images/Суп.jpg", DishGroupId=_dishes.Find(c=>c.NormalizedName.Equals("soups")).DishId},
-            new Dish { DishId = 2, DishName="Борщ",Description="Много сала, без сметаны",Calories =330, Image="Images/Борщ.jpg",DishGroupId=_dishes.Find(c=>c.NormalizedName.Equals("soups")).DishId},
+            new Dish {Id = 1, Name="Суп-харчо", Description="Очень острый, невкусный", Calories =200, Image="Images/Суп.jpg", CategoryId=_dishes.Find(c=>c.Category.NormalizedName.Equals("soups")).Id},
+            new Dish {Id = 2, Name="Борщ",Description="Много сала, без сметаны",Calories =330, Image="Images/Борщ.jpg",CategoryId=_dishes.Find(c=>c.Category.NormalizedName.Equals("soups")).Id},
 
             };
         }
 
-        public Task<ResponseData<ProductListModel<Dish>>> GetProductListAsync(string? categoryNormalizedName, int pageNo = 1)
-        {
-            var model = new ProductListModel<Dish>() { Items = _dishes };
-            var result = new ResponseData<ProductListModel<Dish>>()
-            {
-                Data = model
-            };
-            return Task.FromResult(result);
-        }
+        //public Task<ResponseData<ProductListModel<Dish>>> GetProductListAsync(string? categoryNormalizedName, int pageNo = 1)
+        //{
+        //    var model = new ProductListModel<Dish>() { Items = _dishes };
+        //    var result = new ResponseData<ProductListModel<Dish>>()
+        //    {
+        //        Data = model
+        //    };
+        //    return Task.FromResult(result);
+        //}
 
         public Task<ResponseData<Dish>> GetProductByIdAsync(int id)
         {

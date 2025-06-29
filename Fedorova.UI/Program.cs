@@ -1,5 +1,6 @@
 using Fedorova.UI.Data;
 using Fedorova.UI.Services.CategoryService;
+using Fedorova.UI.Services.ProductService;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
@@ -34,7 +35,8 @@ builder.Services.AddAuthorization(opt =>
     p.RequireClaim(ClaimTypes.Role, "admin"));
 });
 builder.Services.AddSingleton<IEmailSender, NoOpEmailSender>();
-
+builder.Services.AddScoped<ICategoryService, MemoryCategoryService>();
+builder.Services.AddScoped<IProductService, MemoryProductService>();
 builder.Services.AddControllersWithViews();
 
 //builder.Services.AddScoped<ICategoryService>;
