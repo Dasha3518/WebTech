@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace WebLabs.Controllers
+namespace Fedorova.UI.Controllers
 {
     public class Home : Controller
     {

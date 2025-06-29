@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace WebLabs.Components
+namespace Fedorova.UI.Components
 {
     public class CartViewComponent : ViewComponent
     {
