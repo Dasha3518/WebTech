@@ -1,0 +1,25 @@
+﻿@page "/products"
+@using Fedorova.Blazor.Components.ProductComponents
+@using Fedorova.Blazor.Services
+@using Fedorova.Domain.Entities
+@rendermode InteractiveServer
+@inject IProductService<Dish> ProductService
+<h3>Products</h3>
+<CascadingValue Value="ProductService">
+<List DishSelected="ShowDetails" />
+</CascadingValue>
+<Details Dish="SelectedDish" />
+
+@code {  
+    [Parameter]
+    public Dish SelectedDish { get; set; }
+    protected override async Task OnInitializedAsync()
+    {
+        await ProductService.GetProducts();
+    }
+    void ShowDetails(int id)
+    {
+        SelectedDish = ProductService.Products.First(d => d.Id == id);
+    }
+
+}

@@ -6,9 +6,7 @@ namespace Fedorova.UI.Models
     {
         public int TotalPages { get; set; }
         public int CurrentPage { get; set; }
-        private ListModel(IEnumerable<T> items,
-        int total,
-        int current) : base(items)
+        private ListModel(IEnumerable<T> items,int total, int current) : base(items)
         {
             TotalPages = total;
             CurrentPage = current;
