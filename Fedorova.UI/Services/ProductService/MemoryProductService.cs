@@ -2,14 +2,31 @@
 using Fedorova.Domain.Models;
 using Fedorova.UI.Models;
 using Fedorova.UI.Services.CategoryService;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Fedorova.UI.Services.ProductService
 {
     public class MemoryProductService : IProductService
     {
+
+        private readonly IConfiguration _config;
+        private readonly ICategoryService _categoryService;
+        private readonly int _pageNo;
+
         List<Dish> _dishes;
         List<DishGroup> _dishGroup;
         List<Category> _categories;
+
+       
+        public MemoryProductService(
+           IConfiguration config,
+        ICategoryService categoryService,
+        int pageNo)
+        {
+            _config = config;
+        _categoryService = categoryService;
+        _pageNo = pageNo;
+        }
 
         public Task<ResponseData<ProductListModel<Dish>>> GetProductListAsync(string? categoryNormalizedName, int pageNo = 1)
         {

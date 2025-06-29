@@ -6,8 +6,7 @@ using System.Text.Encodings.Web;
 
 namespace Fedorova.UI.Tag_helpers
 {
-    public class Pager(LinkGenerator linkGenerator,
-IHttpContextAccessor httpContextAccessor) : TagHelper
+    public class Pager(LinkGenerator linkGenerator,IHttpContextAccessor httpContextAccessor) : TagHelper
     {
         // номер текущей страницы
         public int CurrentPage { get; set; }
@@ -29,10 +28,9 @@ IHttpContextAccessor httpContextAccessor) : TagHelper
         {
             get => CurrentPage == TotalPages ? TotalPages : CurrentPage + 1;
         }
-    }
+    
 
-    public override void Process(TagHelperContext context,
-TagHelperOutput output)
+    public override void Process(TagHelperContext context,TagHelperOutput output)
         {
             output.TagName = "div";
             output.AddClass("row", HtmlEncoder.Default);
@@ -65,8 +63,7 @@ TagHelperOutput output)
         /// <param name="pageNo">номер страницы</param>
         /// <param name="innerText">текст кнопки</param>
         /// <returns></returns>
-        TagBuilder CreateListItem(string? category, int pageNo,
-        string? innerText)
+        TagBuilder CreateListItem(string? category, int pageNo, string? innerText)
         {
             var li = new TagBuilder("li");
             li.AddCssClass("page-item");
