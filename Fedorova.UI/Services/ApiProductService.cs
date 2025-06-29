@@ -4,7 +4,7 @@ using Fedorova.UI.Models;
 using Fedorova.UI.Services.ProductService;
 using System.Text.Json;
 
-namespace Ganets.UI.Services
+namespace Fedorova.UI.Services
 {
     public class ApiProductService(HttpClient httpClient) : IProductService
     {

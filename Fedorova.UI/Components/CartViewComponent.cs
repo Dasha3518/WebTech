@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Fedorova.Domain;
+using Fedorova.UI;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Fedorova.UI.Components
 {
@@ -6,6 +9,7 @@ namespace Fedorova.UI.Components
     {
         public IViewComponentResult Invoke()
         {
+            var cart = HttpContext.Session.Get<Cart>("cart");
             return View();
         }
     }

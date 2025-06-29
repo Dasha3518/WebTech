@@ -2,7 +2,7 @@
 using Fedorova.Domain.Entities;
 using Fedorova.UI.Services.CategoryService;
 
-namespace Ganets.UI.Services
+namespace Fedorova.UI.Services
 {
     public class ApiCategoryService(HttpClient httpClient) : ICategoryService
     {

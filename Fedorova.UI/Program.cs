@@ -4,7 +4,13 @@ using Fedorova.UI.Services.ProductService;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
 using System.Security.Claims;
+
+Log.Logger = new LoggerConfiguration()
+.WriteTo.Console()
+.WriteTo.File("logs/log.txt", rollingInterval: RollingInterval.Day)
+.CreateLogger();
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -41,6 +47,10 @@ builder.Services.AddControllersWithViews();
 
 //builder.Services.AddScoped<ICategoryService>;
 
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession();
+builder.Host.UseSerilog();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -62,6 +72,7 @@ app.UseRouting();
 
 app.UseAuthorization();
 
+app.UseSession();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");

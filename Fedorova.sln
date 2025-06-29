@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fedorova.Domain", "Fedorova
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fedorova.API", "Fedorova.API\Fedorova.API.csproj", "{2EC180B9-0CE4-4EB0-B72C-66E180E33FFE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fedorova.Test", "Fedorova.Test\Fedorova.Test.csproj", "{5FB7588B-CBF4-4C01-8427-8741ECC88E2A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{2EC180B9-0CE4-4EB0-B72C-66E180E33FFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2EC180B9-0CE4-4EB0-B72C-66E180E33FFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2EC180B9-0CE4-4EB0-B72C-66E180E33FFE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5FB7588B-CBF4-4C01-8427-8741ECC88E2A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5FB7588B-CBF4-4C01-8427-8741ECC88E2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5FB7588B-CBF4-4C01-8427-8741ECC88E2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5FB7588B-CBF4-4C01-8427-8741ECC88E2A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
